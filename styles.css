@@ -1,0 +1,109 @@
+/* Универсальный сброс и box-sizing */
+@font-face {
+    font-family: 'Cormorant Infant';
+    src: url('CormorantInfant-VariableFont_wght.ttf') format('truetype');
+    font-weight: normal;
+    font-style: normal;
+}
+
+* {
+  box-sizing: border-box;
+  margin: 0;
+  padding: 0;
+}
+
+/* Основной стиль страницы */
+body {
+    font-family: 'Cormorant Infant', serif;
+    font-size: 16px;
+    color: #333;
+    background-color: #f9f9f9;
+    line-height: 1.6;
+}
+
+/* Блочные элементы */
+header, footer, main, nav, div, section {
+  margin: 20px;
+  padding: 20px;
+}
+
+/* Заголовки */
+h1, h2 {
+  font-size: 28px;
+  color: #d62828;
+  margin-bottom: 10px;
+}
+
+/* Текст */
+p {
+  font-size: 16px;
+  color: #444;
+}
+
+/* Изображения */
+img {
+  width: 100%;
+  max-width: 400px;
+  height: auto;
+  display: block;
+  margin-bottom: 20px;
+}
+
+/* Навигация */
+nav {
+  background-color: #d62828;
+  padding: 10px;
+}
+
+nav a {
+  text-decoration: none;
+  font-size: 16px;
+  color: white;
+  margin-right: 15px;
+  transition: color 0.3s ease;
+}
+
+nav a:hover {
+  color: #fcbf49;
+}
+
+/* Таблица */
+table {
+  width: 100%;
+  border-collapse: collapse;
+  margin-top: 20px;
+}
+
+table th, table td {
+  padding: 12px;
+  border: 1px solid #ccc;
+  text-align: left;
+  font-size: 16px;
+  color: #333;
+}
+
+thead {
+  background-color: #fcbf49;
+}
+
+tbody tr:nth-child(even) {
+  background-color: #f2f2f2;
+}
+
+/* Футер */
+footer {
+  background-color: black;
+  color: white;
+  padding: 30px;
+  text-align: center;
+}
+
+footer a {
+  text-decoration: none;
+  color: #fcbf49;
+  font-size: 16px;
+}
+
+footer a:hover {
+  color: #ffffff;
+}
