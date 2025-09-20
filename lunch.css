@@ -189,4 +189,44 @@ footer nav a:hover {
   color: #ffffff;
 }
 
+/* ≤ 800px */
+@media (max-width: 800px) {
+  .menu-grid {
+    display: grid;
+    grid-template-columns: repeat(2, 1fr); /* 2 колонки */
+    justify-items: center; /* Центрируем карточки в ячейках сетки */
+  }
+
+  header nav {
+    justify-content: space-between; /* Равное расстояние между элементами */
+  }
+
+  h1 {
+    text-align: center;
+  }
+}
+
+/* ≤ 600px */
+@media (max-width: 600px) {
+  header nav {
+    flex-direction: column; /* Вертикальное направление */
+    align-items: center; /* Центрирование по поперечной оси */
+    gap: 15px; /* Добавим отступ между ссылками */
+  }
+
+  header nav a {
+    font-size: 22px; /* Увеличиваем шрифт на ~4px (было 18px) */
+  }
+
+  h2 {
+    text-align: center;
+  }
+
+  .menu-grid {
+    grid-template-columns: 1fr; /* 1 колонка */
+  }
+}
+
+
+
 
