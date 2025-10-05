@@ -8,206 +8,115 @@
 </head>
 <body>
   <header>
-  <h1 class="company-name">Бизнес-ланчи Москва</h1>
-  <nav>
-    <a href="index.html">Главная</a>
-    <a href="lunch.html" class="active">Ланч-меню</a>
-    <a href="#">О нас</a>
-    <a href="#">Контакты</a>
-  </nav>
-</header>
+    <h1 class="company-name">Бизнес-ланчи Москва</h1>
+    <nav>
+      <a href="index.html">Главная</a>
+      <a href="lunch.html" class="active">Ланч-меню</a>
+      <a href="#">О нас</a>
+      <a href="#">Контакты</a>
+    </nav>
+  </header>
 
   <main>
     <section>
       <h2>Выберите суп</h2>
-      <div class="menu-grid">
-        <div class="card">
-          <img src="images/soup.jpg" alt="Гаспачо">
-          <div class="info">
-            <p class="price">195 ₽</p>
-            <p class="name">Гаспачо</p>
-            <p class="weight">350 г</p>
-          </div>
-          <button>Добавить</button>
-        </div>
-
-        <div class="card">
-          <img src="images/soupsir.jpg" alt="Грибной суп-пюре">
-          <div class="info">
-            <p class="price">185 ₽</p>
-            <p class="name">Грибной суп-пюре</p>
-            <p class="weight">330 г</p>
-          </div>
-          <button>Добавить</button>
-        </div>
-
-        <div class="card">
-          <img src="images/goroh.jpg" alt="Норвежский суп">
-          <div class="info">
-            <p class="price">270 ₽</p>
-            <p class="name">Норвежский суп</p>
-            <p class="weight">330 г</p>
-          </div>
-          <button>Добавить</button>
-        </div>
-      </div>
+      <div class="menu-grid"></div>
     </section>
 
     <section>
       <h2>Выберите основное блюдо</h2>
-      <div class="menu-grid">
-        <div class="card">
-          <img src="images/blinchiki-s-myasom.jpg" alt="Блинчики с мясом">
-          <div class="info">
-            <p class="price">210 ₽</p>
-            <p class="name">Блинчики с мясом</p>
-            <p class="weight">250 г</p>
-          </div>
-          <button>Добавить</button>
-        </div>
-
-        <div class="card">
-          <img src="images/pizza-margherita.jpg" alt="Пицца Маргарита">
-          <div class="info">
-            <p class="price">350 ₽</p>
-            <p class="name">Пицца Маргарита</p>
-            <p class="weight">450 г</p>
-          </div>
-          <button>Добавить</button>
-        </div>
-
-        <div class="card">
-          <img src="images/main.jpg" alt="Котлета с пюре">
-          <div class="info">
-            <p class="price">290 ₽</p>
-            <p class="name">Котлета с пюре</p>
-            <p class="weight">320 г</p>
-          </div>
-          <button>Добавить</button>
-        </div>
-      </div>
+      <div class="menu-grid"></div>
     </section>
 
     <section>
       <h2>Напитки</h2>
-      <div class="menu-grid">
-        <div class="card">
-          <img src="images/drink.jpg" alt="Компот">
-          <div class="info">
-            <p class="price">70 ₽</p>
-            <p class="name">Компот</p>
-            <p class="weight">200 мл</p>
-          </div>
-          <button>Добавить</button>
-        </div>
-
-        <div class="card">
-          <img src="images/tea.jpeg" alt="Чай">
-          <div class="info">
-            <p class="price">60 ₽</p>
-            <p class="name">Чай</p>
-            <p class="weight">200 мл</p>
-          </div>
-          <button>Добавить</button>
-        </div>
-
-        <div class="card">
-          <img src="images/kakao.jpg" alt="Какао">
-          <div class="info">
-            <p class="price">80 ₽</p>
-            <p class="name">Какао</p>
-            <p class="weight">200 мл</p>
-          </div>
-          <button>Добавить</button>
-        </div>
-      </div>
+      <div class="menu-grid"></div>
     </section>
-     <section class="order-form">
 
-  <h2>Сделать заказ</h2>
-  <form action="https://httpbin.org/post" method="POST">
-    <div class="form-columns">
+    <section class="order-form">
+      <h2>Сделать заказ</h2>
+      <form action="https://httpbin.org/post" method="POST">
+        <div class="form-columns">
+          <div class="form-block">
+            <h3>Ваш заказ</h3>
+<!--
+            <label for="soup">Суп</label>
+            <select id="soup" name="soup" required>
+              <option value="">Выберите суп</option>
+              <option value="gaspacho">Гаспачо</option>
+              <option value="mushroom">Грибной суп-пюре</option>
+              <option value="norwegian">Норвежский суп</option>
+            </select>
 
-      <div class="form-block">
-        <h3>Ваш заказ</h3>
+            <label for="main">Главное блюдо</label>
+            <select id="main" name="main" required>
+              <option value="">Выберите главное блюдо</option>
+              <option value="blinchiki">Блинчики с мясом</option>
+              <option value="pizza">Пицца Маргарита</option>
+              <option value="cutlet">Котлета с пюре</option>
+            </select>
 
-        <label for="soup">Суп</label>
-        <select id="soup" name="soup" required>
-          <option value="">Выберите суп</option>
-          <option value="gaspacho">Гаспачо</option>
-          <option value="mushroom">Грибной суп-пюре</option>
-          <option value="norwegian">Норвежский суп</option>
-        </select>
+            <label for="drink">Напиток</label>
+            <select id="drink" name="drink" required>
+              <option value="">Выберите напиток</option>
+              <option value="kompot">Компот</option>
+              <option value="tea">Чай</option>
+              <option value="cacao">Какао</option>
+            </select>
+          -->
+            <label for="comments">Комментарий к заказу</label>
+            <textarea id="comments" name="comments"></textarea>
+          </div>
 
-        <label for="main">Главное блюдо</label>
-        <select id="main" name="main" required>
-          <option value="">Выберите главное блюдо</option>
-          <option value="blinchiki">Блинчики с мясом</option>
-          <option value="pizza">Пицца Маргарита</option>
-          <option value="cutlet">Котлета с пюре</option>
-        </select>
+          <div class="form-block">
+            <h3>Ваши данные</h3>
 
-        <label for="drink">Напиток</label>
-        <select id="drink" name="drink" required>
-          <option value="">Выберите напиток</option>
-          <option value="kompot">Компот</option>
-          <option value="tea">Чай</option>
-          <option value="cacao">Какао</option>
-        </select>
+            <label for="name">Имя</label>
+            <input type="text" id="name" name="name" required>
 
-        <label for="comments">Комментарий к заказу</label>
-        <textarea id="comments" name="comments"></textarea>
-      </div>
+            <label for="email">Email</label>
+            <input type="email" id="email" name="email" required>
 
-      
-      <div class="form-block">
-        <h3>Ваши данные</h3>
+            <div class="checkbox-group">
+              <input type="checkbox" id="subscribe" name="subscribe" checked>
+              <label for="subscribe">Получать информацию о скидках и акциях</label>
+            </div>
 
-        <label for="name">Имя</label>
-        <input type="text" id="name" name="name" required>
+            <label for="phone">Телефон</label>
+            <input type="tel" id="phone" name="phone" required>
 
-        <label for="email">Email</label>
-        <input type="email" id="email" name="email" required>
+            <label for="address">Адрес доставки</label>
+            <input type="text" id="address" name="address" required>
+            <small>Доставка осуществляется только по Москве</small>
 
-        <div class="checkbox-group">
-          <input type="checkbox" id="subscribe" name="subscribe" checked>
-          <label for="subscribe">Получать информацию о скидках и акциях</label>
+            <fieldset class="delivery-options">
+              <legend>Время доставки:</legend>
+
+              <label for="asap">
+                <input type="radio" id="asap" name="delivery_time_choice" value="asap" required>
+                Как можно скорее
+              </label>
+
+              <label for="specific">
+                <input type="radio" id="specific" name="delivery_time_choice" value="specific" required>
+                К указанному времени
+              </label>
+            </fieldset>
+
+            <label for="delivery_time">Укажите время доставки</label>
+            <input type="text" id="delivery_time" name="delivery_time" class="time"
+                   placeholder="например, 14:35"
+                   pattern="^(0[7-9]|1[0-9]|2[0-2]|23):[0-5][05]$"
+                   title="Введите время от 07:00 до 23:00 с шагом 5 минут">
+
+            <div class="form-buttons">
+              <button type="reset">Сбросить</button>
+              <button type="submit">Отправить</button>
+            </div>
+          </div>
         </div>
-
-        <label for="phone">Телефон</label>
-        <input type="tel" id="phone" name="phone" required>
-
-        <label for="address">Адрес доставки</label>
-        <input type="text" id="address" name="address" required>
-        <small>Доставка осуществляется только по Москве</small>
-
-        <fieldset class="delivery-options">
-  <legend>Время доставки:</legend>
-
-  <label for="asap">
-    <input type="radio" id="asap" name="delivery_time_choice" value="asap" required>
-    Как можно скорее
-  </label>
-
-  <label for="specific">
-    <input type="radio" id="specific" name="delivery_time_choice" value="specific" required>
-    К указанному времени
-  </label>
-</fieldset>
-
-<label for="delivery_time">Укажите время доставки</label>
-<input type="text" id="delivery_time" name="delivery_time" class="time"
-       placeholder="например, 14:35"
-       pattern="^(0[7-9]|1[0-9]|2[0-2]|23):[0-5][05]$"
-       title="Введите время от 07:00 до 23:00 с шагом 5 минут">
-        <div class="form-buttons">
-          <button type="reset">Сбросить</button>
-          <button type="submit">Отправить</button>
-        </div>
-      </div>
-    </div>
-  </form>
-</section>
+      </form>
+    </section>
   </main>
 
   <footer>
@@ -217,6 +126,11 @@
       <a href="#">Условия использования</a>
     </nav>
   </footer>
+
+  <!-- Подключение скриптов -->
+  <script src="menu.js"></script>
+  <script src="render.js"></script>
 </body>
 </html>
+
 
