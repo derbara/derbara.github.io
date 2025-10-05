@@ -91,7 +91,7 @@ header nav a.active {
   font-weight: bold;
 }
 
-/* ===== Карточки блюд ===== */
+/* Карточки блюд*/
 .menu-grid {
   display: flex;
   justify-content: center; /* карточки по центру */
@@ -189,6 +189,7 @@ footer nav a:hover {
   color: #ffffff;
 }
 
+
 /* ≤ 800px */
 @media (max-width: 800px) {
   .menu-grid {
@@ -226,6 +227,7 @@ footer nav a:hover {
     grid-template-columns: 1fr; /* 1 колонка */
   }
 }
+
 .order-form {
   background-color: #fff;
   padding: 40px 20px;
@@ -326,6 +328,21 @@ button:hover {
   border: 1px solid #ccc;
   margin-bottom: 20px;
 }
+.order-summary {
+  margin-top: 1em;
+  font-size: 1em;
+  color: #333;
+}
+.order-item {
+  margin-bottom: 0.5em;
+}
+.total-price {
+  font-weight: bold;
+  font-size: 1.2em;
+  margin-top: 1em;
+  color: #333;
+}
+
 
 
 
