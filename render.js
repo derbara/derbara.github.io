@@ -4,8 +4,8 @@ window.addEventListener('DOMContentLoaded', () => {
 
   const sections = {
     soup: document.querySelector('[data-category="soup"]'),
-    main: document.querySelector('[data-category="main"]'),
-    starter: document.querySelector('[data-category="starter"]'),
+    'main-course': document.querySelector('[data-category="main-course"]'),
+    salad: document.querySelector('[data-category="salad"]'),
     drink: document.querySelector('[data-category="drink"]'),
     dessert: document.querySelector('[data-category="dessert"]')
   };
@@ -16,8 +16,8 @@ window.addEventListener('DOMContentLoaded', () => {
 
   const selected = {
     soup: [],
-    main: [],
-    starter: [],
+    'main-course': [],
+    salad: [],
     drink: [],
     dessert: []
   };
@@ -36,21 +36,21 @@ window.addEventListener('DOMContentLoaded', () => {
     const ids = JSON.parse(raw);
     for (const cat in ids) {
       const dish = allDishes.find(d => d.id === ids[cat]);
-      if (dish) selected[cat].push(dish);
+      if (dish) selected[dish.category].push(dish);
     }
   }
 
   function validateCombo(selected) {
     const hasSoup = selected.soup.length > 0;
-    const hasMain = selected.main.length > 0;
-    const hasStarter = selected.starter.length > 0;
+    const hasMain = selected['main-course'].length > 0;
+    const hasSalad = selected.salad.length > 0;
     const hasDrink = selected.drink.length > 0;
 
     return (
-      (hasSoup && hasMain && hasStarter && hasDrink) ||
+      (hasSoup && hasMain && hasSalad && hasDrink) ||
       (hasSoup && hasMain && hasDrink) ||
-      (hasSoup && hasStarter && hasDrink) ||
-      (hasMain && hasStarter && hasDrink) ||
+      (hasSoup && hasSalad && hasDrink) ||
+      (hasMain && hasSalad && hasDrink) ||
       (hasMain && hasDrink)
     );
   }
@@ -167,5 +167,6 @@ window.addEventListener('DOMContentLoaded', () => {
     overlay.querySelector('button').addEventListener('click', () => overlay.remove());
   }
 });
+
 
 
