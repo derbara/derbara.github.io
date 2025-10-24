@@ -148,6 +148,15 @@ window.addEventListener('DOMContentLoaded', () => {
     updateCheckoutPanel();
   });
 
+  if (checkoutLink) {
+    checkoutLink.addEventListener('click', (e) => {
+      if (checkoutLink.classList.contains('disabled')) {
+        e.preventDefault();
+        showNotification('Сначала соберите допустимый комбо-набор для оформления заказа.');
+      }
+    });
+  }
+
   function showNotification(message) {
     const existing = document.querySelector('.notification');
     if (existing) existing.remove();
@@ -167,6 +176,5 @@ window.addEventListener('DOMContentLoaded', () => {
     overlay.querySelector('button').addEventListener('click', () => overlay.remove());
   }
 });
-
 
 
