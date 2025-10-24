@@ -1,8 +1,8 @@
 window.addEventListener('DOMContentLoaded', () => {
   const sections = {
     soup: document.querySelector('[data-category="soup"]'),
-    'main-course': document.querySelector('[data-category="main"]'),
-    salad: document.querySelector('[data-category="starter"]'),
+    'main-course': document.querySelector('[data-category="main-course"]'),
+    salad: document.querySelector('[data-category="salad"]'),
     drink: document.querySelector('[data-category="drink"]'),
     dessert: document.querySelector('[data-category="dessert"]')
   };
@@ -125,11 +125,12 @@ window.addEventListener('DOMContentLoaded', () => {
   }
 
   loadDishes().then(menuItems => {
-    menuItems.forEach(item => {
-      const section = sections[item.category];
-      if (section) section.appendChild(createCard(item));
+    // Отрисовать все категории при загрузке
+    Object.entries(sections).forEach(([category, grid]) => {
+      renderAll(category, grid, menuItems);
     });
 
+    // Настроить фильтры
     document.querySelectorAll('.filters').forEach(filterBlock => {
       const buttons = filterBlock.querySelectorAll('button');
       const grid = filterBlock.nextElementSibling;
@@ -217,5 +218,7 @@ window.addEventListener('DOMContentLoaded', () => {
 
   updateOrderDisplay();
 });
+
+
 
 
