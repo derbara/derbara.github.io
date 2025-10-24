@@ -1,5 +1,5 @@
 const API_URL = 'https://edu.std-900.ist.mospolytech.ru/labs/api';
-const API_KEY = '50c41ef5-a738-4f61-869e-0fa04dc0d8db'; 
+const API_KEY = '50c41ef5-a738-4f61-869e-0fa04dc0d8db';
 
 document.addEventListener('DOMContentLoaded', async () => {
   const selectedIds = JSON.parse(localStorage.getItem('order')) || {};
@@ -7,6 +7,14 @@ document.addEventListener('DOMContentLoaded', async () => {
   const summaryContainer = document.querySelector('.order-summary');
   const totalDisplay = document.querySelector('.total-price');
   const emptyMessage = document.querySelector('.empty-message');
+
+  const labels = {
+    soup: 'Суп',
+    'main-course': 'Главное блюдо',
+    salad: 'Салат',
+    drink: 'Напиток',
+    dessert: 'Десерт'
+  };
 
   let allDishes = [];
 
@@ -43,14 +51,14 @@ document.addEventListener('DOMContentLoaded', async () => {
       `;
       total += dish.price;
     } else {
-      card.innerHTML = `<p>${cat === 'main-course' ? 'Главное блюдо' : cat}: Не выбрано</p>`;
+      card.innerHTML = `<p>${labels[cat]}: Не выбрано</p>`;
     }
 
     orderItemsContainer.appendChild(card);
 
     const line = document.createElement('div');
     line.className = 'order-line';
-    line.textContent = dish ? `${dish.name} ${dish.price}₽` : `${cat}: Не выбран`;
+    line.textContent = dish ? `${labels[cat]}: ${dish.name} ${dish.price}₽` : `${labels[cat]}: Не выбран`;
     summaryContainer.appendChild(line);
   });
 
@@ -92,7 +100,7 @@ document.addEventListener('DOMContentLoaded', async () => {
       soup_id: selectedIds.soup || null,
       main_course_id: selectedIds['main-course'] || null,
       salad_id: selectedIds.salad || null,
-      drink_id: selectedIds.drink,
+      drink_id: selectedIds.drink || null,
       dessert_id: selectedIds.dessert || null
     };
 
@@ -130,3 +138,5 @@ function validateCombo(order) {
     (hasMain && hasDrink)
   );
 }
+
+
