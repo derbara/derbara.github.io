@@ -1,28 +1,31 @@
 window.addEventListener('DOMContentLoaded', () => {
-  // Находим контейнеры для карточек
   const sections = {
-    soup: document.querySelector('section:nth-of-type(1) .menu-grid'),
-    main: document.querySelector('section:nth-of-type(2) .menu-grid'),
-    drink: document.querySelector('section:nth-of-type(3) .menu-grid')
+    soup: document.querySelector('[data-category="soup"]'),
+    main: document.querySelector('[data-category="main"]'),
+    starter: document.querySelector('[data-category="starter"]'),
+    drink: document.querySelector('[data-category="drink"]'),
+    dessert: document.querySelector('[data-category="dessert"]')
   };
 
-  // Создаём блок для отображения заказа
   const orderBlock = document.querySelector('.form-block h3');
   const orderDisplay = document.createElement('div');
   orderDisplay.className = 'order-summary';
   orderBlock.insertAdjacentElement('afterend', orderDisplay);
 
-  // Создаём блок для итоговой стоимости
   const totalDisplay = document.createElement('p');
   totalDisplay.className = 'total-price';
   orderDisplay.insertAdjacentElement('afterend', totalDisplay);
 
-  // Хранилище выбранных блюд
-  const selected = { soup: null, main: null, drink: null };
+  const selected = {
+    soup: [],
+    main: [],
+    starter: [],
+    drink: [],
+    dessert: []
+  };
 
-  // Функция обновления блока заказа
   function updateOrderDisplay() {
-    const hasSelection = Object.values(selected).some(Boolean);
+    const hasSelection = Object.values(selected).some(arr => arr.length > 0);
     orderDisplay.innerHTML = '';
 
     if (!hasSelection) {
@@ -34,31 +37,44 @@ window.addEventListener('DOMContentLoaded', () => {
     const labels = {
       soup: 'Суп',
       main: 'Главное блюдо',
-      drink: 'Напиток'
+      starter: 'Салат/Стартер',
+      drink: 'Напиток',
+      dessert: 'Десерт'
     };
 
-    for (const category of ['soup', 'main', 'drink']) { //Перебор категорий и отображение заказа
-      const item = selected[category]; //Получаем выбранное блюдо из объекта selected по текущей категории.
-      const block = document.createElement('div'); //Создаём новый HTML-элемент <div>, который будет отображать одно блюдо.
-      block.className = 'order-item'; //стилизация
+    for (const category of Object.keys(selected)) {
+      const items = selected[category];
+      const block = document.createElement('div');
+      block.className = 'order-item';
+      block.innerHTML = `<strong>${labels[category]}</strong><br>`;
 
-      if (item) {
-        block.innerHTML = `<strong>${labels[category]}</strong><br>${item.name} ${item.price}₽`;
+      if (items.length > 0) {
+        items.forEach((item, index) => {
+          const line = document.createElement('div');
+          line.className = 'order-line';
+          line.innerHTML = `${item.name} ${item.price}₽ <button class="remove-btn">Удалить</button>`;
+
+          line.querySelector('button').addEventListener('click', () => {
+            selected[category].splice(index, 1);
+            updateOrderDisplay();
+          });
+
+          block.appendChild(line);
+        });
       } else {
-        block.innerHTML = `<strong>${labels[category]}</strong><br>${labels[category]} не выбран`;
+        block.innerHTML += `${labels[category]} не выбран`;
       }
 
       orderDisplay.appendChild(block);
     }
 
-    let total = 0; //хранит сумму заказа
-    for (const item of Object.values(selected)) {
-      if (item) total += item.price;
+    let total = 0;
+    for (const items of Object.values(selected)) {
+      items.forEach(item => total += item.price);
     }
-    totalDisplay.textContent = `Итоговая стоимость: ${total} ₽`; //итоговую суммa
+    totalDisplay.textContent = `Итоговая стоимость: ${total} ₽`;
   }
 
-  // Функция создания карточки блюда
   function createCard(item) {
     const card = document.createElement('div');
     card.className = 'card';
@@ -75,20 +91,134 @@ window.addEventListener('DOMContentLoaded', () => {
     `;
 
     card.addEventListener('click', () => {
-      selected[item.category] = item;
+      selected[item.category].push(item);
       updateOrderDisplay();
     });
 
     return card;
   }
 
-  // Сортировка и отображение карточек
-  const sortedItems = menuItems.slice().sort((a, b) => a.name.localeCompare(b.name, 'ru'));
+  function renderAll(category, grid, menuItems) {
+    grid.innerHTML = '';
+    menuItems
+      .filter(item => item.category === category)
+      .forEach(item => grid.appendChild(createCard(item)));
+  }
 
-  sortedItems.forEach(item => {
-    const card = createCard(item);
-    sections[item.category].appendChild(card);
+  function renderFiltered(category, kind, grid, menuItems) {
+    grid.innerHTML = '';
+    menuItems
+      .filter(item => item.category === category && item.kind === kind)
+      .forEach(item => grid.appendChild(createCard(item)));
+  }
+
+  async function loadDishes() {
+    try {
+      const response = await fetch('https://edu.std-900.ist.mospolytech.ru/labs/api/dishes', {
+        headers: {
+          'Authorization': 'Bearer 50c41ef5-a738-4f61-869e-0fa04dc0d8db'
+        }
+      });
+      if (!response.ok) throw new Error('Ошибка загрузки данных');
+      return await response.json();
+    } catch (error) {
+      console.error('Ошибка при загрузке блюд:', error);
+      showNotification('Не удалось загрузить меню. Попробуйте позже.');
+      return [];
+    }
+  }
+
+  loadDishes().then(menuItems => {
+    menuItems.forEach(item => {
+      const section = sections[item.category];
+      if (section) section.appendChild(createCard(item));
+    });
+
+    document.querySelectorAll('.filters').forEach(filterBlock => {
+      const buttons = filterBlock.querySelectorAll('button');
+      const grid = filterBlock.nextElementSibling;
+      const category = grid.dataset.category;
+
+      buttons.forEach(button => {
+        button.addEventListener('click', () => {
+          const kind = button.dataset.kind;
+
+          if (button.classList.contains('active')) {
+            button.classList.remove('active');
+            renderAll(category, grid, menuItems);
+          } else {
+            buttons.forEach(btn => btn.classList.remove('active'));
+            button.classList.add('active');
+            renderFiltered(category, kind, grid, menuItems);
+          }
+        });
+      });
+    });
   });
-  updateOrderDisplay(); // Показывает "Ничего не выбрано" при загрузке
 
+  document.querySelector('form').addEventListener('submit', e => {
+    const counts = {
+      soup: selected.soup.length,
+      main: selected.main.length,
+      starter: selected.starter.length,
+      drink: selected.drink.length,
+      dessert: selected.dessert.length
+    };
+
+    const totalSelected = Object.values(counts).reduce((sum, val) => sum + val, 0);
+
+    if (totalSelected === 0) {
+      e.preventDefault();
+      showNotification('Ничего не выбрано. Выберите блюда для заказа');
+      return;
+    }
+
+    if (counts.soup > 0 && counts.main === 0 && counts.starter === 0) {
+      e.preventDefault();
+      showNotification('Выберите главное блюдо/салат/стартер');
+      return;
+    }
+
+    if (counts.starter > 0 && counts.soup === 0 && counts.main === 0) {
+      e.preventDefault();
+      showNotification('Выберите суп или главное блюдо');
+      return;
+    }
+
+    if ((counts.drink > 0 || counts.dessert > 0) && counts.main === 0) {
+      e.preventDefault();
+      showNotification('Выберите главное блюдо');
+      return;
+    }
+
+    const hasMeal = counts.soup + counts.main + counts.starter >= 1;
+    if (hasMeal && counts.drink === 0) {
+      e.preventDefault();
+      showNotification('Выберите напиток');
+      return;
+    }
+  });
+
+  function showNotification(message) {
+    const existing = document.querySelector('.notification');
+    if (existing) existing.remove();
+
+    const overlay = document.createElement('div');
+    overlay.className = 'notification';
+
+    overlay.innerHTML = `
+      <div class="notification-content">
+        <p>${message}</p>
+        <button>Окей 👌</button>
+      </div>
+    `;
+
+    document.body.appendChild(overlay);
+
+    const button = overlay.querySelector('button');
+    button.addEventListener('click', () => overlay.remove());
+  }
+
+  updateOrderDisplay();
 });
+
