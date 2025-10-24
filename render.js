@@ -1,8 +1,11 @@
 window.addEventListener('DOMContentLoaded', () => {
+  const API_URL = 'https://edu.std-900.ist.mospolytech.ru/labs/api/dishes';
+  const API_KEY = '50c41ef5-a738-4f61-869e-0fa04dc0d8db';
+
   const sections = {
     soup: document.querySelector('[data-category="soup"]'),
-    'main-course': document.querySelector('[data-category="main-course"]'),
-    salad: document.querySelector('[data-category="salad"]'),
+    main: document.querySelector('[data-category="main"]'),
+    starter: document.querySelector('[data-category="starter"]'),
     drink: document.querySelector('[data-category="drink"]'),
     dessert: document.querySelector('[data-category="dessert"]')
   };
@@ -18,11 +21,29 @@ window.addEventListener('DOMContentLoaded', () => {
 
   const selected = {
     soup: [],
-    'main-course': [],
-    salad: [],
+    main: [],
+    starter: [],
     drink: [],
     dessert: []
   };
+
+  function saveToStorage() {
+    const ids = {};
+    for (const cat in selected) {
+      if (selected[cat][0]) ids[cat] = selected[cat][0].id;
+    }
+    localStorage.setItem('order', JSON.stringify(ids));
+  }
+
+  function loadFromStorage(allDishes) {
+    const raw = localStorage.getItem('order');
+    if (!raw) return;
+    const ids = JSON.parse(raw);
+    for (const cat in ids) {
+      const dish = allDishes.find(d => d.id === ids[cat]);
+      if (dish) selected[cat].push(dish);
+    }
+  }
 
   function updateOrderDisplay() {
     const hasSelection = Object.values(selected).some(arr => arr.length > 0);
@@ -36,8 +57,8 @@ window.addEventListener('DOMContentLoaded', () => {
 
     const labels = {
       soup: 'Суп',
-      'main-course': 'Главное блюдо',
-      salad: 'Салат/Стартер',
+      main: 'Главное блюдо',
+      starter: 'Салат/Стартер',
       drink: 'Напиток',
       dessert: 'Десерт'
     };
@@ -56,6 +77,7 @@ window.addEventListener('DOMContentLoaded', () => {
 
           line.querySelector('button').addEventListener('click', () => {
             selected[category].splice(index, 1);
+            saveToStorage();
             updateOrderDisplay();
           });
 
@@ -91,7 +113,8 @@ window.addEventListener('DOMContentLoaded', () => {
     `;
 
     card.addEventListener('click', () => {
-      selected[item.category].push(item);
+      selected[item.category] = [item];
+      saveToStorage();
       updateOrderDisplay();
     });
 
@@ -113,26 +136,27 @@ window.addEventListener('DOMContentLoaded', () => {
   }
 
   async function loadDishes() {
-  try {
-    const response = await fetch('http://lab7-api.std-900.ist.mospolytech.ru/api/dishes');
-    if (!response.ok) throw new Error('Ошибка загрузки данных с сервера');
-    return await response.json();
-  } catch (error) {
-    console.error('Ошибка при загрузке блюд:', error);
-    showNotification('Не удалось загрузить меню. Попробуйте позже.');
-    return [];
+    try {
+      const response = await fetch(`${API_URL}?api_key=${API_KEY}`);
+      if (!response.ok) throw new Error('Ошибка загрузки данных');
+      return await response.json();
+    } catch (error) {
+      console.error('Ошибка при загрузке блюд:', error);
+      showNotification('Не удалось загрузить меню. Попробуйте позже.');
+      return [];
+    }
   }
-}
-
 
   loadDishes().then(menuItems => {
-    Object.entries(sections).forEach(([category, grid]) => {
-      renderAll(category, grid, menuItems);
+    loadFromStorage(menuItems);
+
+    Object.entries(sections).forEach(([cat, grid]) => {
+      renderAll(cat, grid, menuItems);
     });
 
     document.querySelectorAll('.filters').forEach(filterBlock => {
       const buttons = filterBlock.querySelectorAll('button');
-      const grid = filterBlock.parentElement.querySelector('.menu-grid');
+      const grid = filterBlock.nextElementSibling;
       const category = grid.dataset.category;
 
       buttons.forEach(button => {
@@ -150,13 +174,15 @@ window.addEventListener('DOMContentLoaded', () => {
         });
       });
     });
+
+    updateOrderDisplay();
   });
 
   document.querySelector('form').addEventListener('submit', e => {
     const counts = {
       soup: selected.soup.length,
-      main: selected['main-course'].length,
-      starter: selected.salad.length,
+      main: selected.main.length,
+      starter: selected.starter.length,
       drink: selected.drink.length,
       dessert: selected.dessert.length
     };
@@ -169,40 +195,28 @@ window.addEventListener('DOMContentLoaded', () => {
       return;
     }
 
-    if (counts.drink === 0) {
+    if (counts.soup > 0 && counts.main === 0 && counts.starter === 0) {
       e.preventDefault();
-      showNotification('Выберите напиток');
+      showNotification('Выберите главное блюдо/салат/стартер');
       return;
     }
 
-    const validCombo =
-      (counts.soup && counts.main && counts.starter && counts.drink) || // вариант 1
-      (counts.soup && counts.main && counts.drink) ||                   // вариант 2
-      (counts.soup && counts.starter && counts.drink) ||                // вариант 3
-      (counts.main && counts.starter && counts.drink) ||                // вариант 4
-      (counts.main && counts.drink);                                    // вариант 5
-
-    if (!validCombo) {
-      if (counts.soup > 0 && counts.main === 0 && counts.starter === 0) {
-        e.preventDefault();
-        showNotification('Выберите главное блюдо/салат/стартер');
-        return;
-      }
-
-      if (counts.starter > 0 && counts.soup === 0 && counts.main === 0) {
-        e.preventDefault();
-        showNotification('Выберите суп или главное блюдо');
-        return;
-      }
-
-      if ((counts.drink > 0 || counts.dessert > 0) && counts.main === 0 && counts.soup === 0 && counts.starter === 0) {
-        e.preventDefault();
-        showNotification('Выберите главное блюдо');
-        return;
-      }
-
+    if (counts.starter > 0 && counts.soup === 0 && counts.main === 0) {
       e.preventDefault();
-      showNotification('Комбинация блюд недопустима. Проверьте состав ланча');
+      showNotification('Выберите суп или главное блюдо');
+      return;
+    }
+
+    if ((counts.drink > 0 || counts.dessert > 0) && counts.main === 0 && counts.soup === 0 && counts.starter === 0) {
+      e.preventDefault();
+      showNotification('Выберите главное блюдо');
+      return;
+    }
+
+    const hasMeal = counts.soup + counts.main + counts.starter >= 1;
+    if (hasMeal && counts.drink === 0) {
+      e.preventDefault();
+      showNotification('Выберите напиток');
       return;
     }
   });
@@ -223,11 +237,8 @@ window.addEventListener('DOMContentLoaded', () => {
 
     document.body.appendChild(overlay);
 
-    const button = overlay.querySelector('button');
-    button.addEventListener('click', () => overlay.remove());
+    overlay.querySelector('button').addEventListener('click', () => overlay.remove());
   }
-
-  updateOrderDisplay();
 });
 
 
