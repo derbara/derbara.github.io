@@ -486,6 +486,13 @@ section h2 {
   background-color: #fcbf49;
   color: black;
 }
+.checkout-link.disabled {
+  pointer-events: none;
+  opacity: 0.5;
+  cursor: not-allowed;
+  text-decoration: none;
+}
+
 
 
 
