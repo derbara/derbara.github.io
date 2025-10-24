@@ -113,16 +113,17 @@ window.addEventListener('DOMContentLoaded', () => {
   }
 
   async function loadDishes() {
-    try {
-      const response = await fetch('dishes.json');
-      if (!response.ok) throw new Error('Ошибка загрузки данных');
-      return await response.json();
-    } catch (error) {
-      console.error('Ошибка при загрузке блюд:', error);
-      showNotification('Не удалось загрузить меню. Попробуйте позже.');
-      return [];
-    }
+  try {
+    const response = await fetch('http://lab7-api.std-900.ist.mospolytech.ru/api/dishes');
+    if (!response.ok) throw new Error('Ошибка загрузки данных с сервера');
+    return await response.json();
+  } catch (error) {
+    console.error('Ошибка при загрузке блюд:', error);
+    showNotification('Не удалось загрузить меню. Попробуйте позже.');
+    return [];
   }
+}
+
 
   loadDishes().then(menuItems => {
     Object.entries(sections).forEach(([category, grid]) => {
@@ -228,4 +229,5 @@ window.addEventListener('DOMContentLoaded', () => {
 
   updateOrderDisplay();
 });
+
 
