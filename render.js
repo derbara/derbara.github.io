@@ -10,14 +10,9 @@ window.addEventListener('DOMContentLoaded', () => {
     dessert: document.querySelector('[data-category="dessert"]')
   };
 
-  const orderBlock = document.querySelector('.form-block h3');
-  const orderDisplay = document.createElement('div');
-  orderDisplay.className = 'order-summary';
-  orderBlock.insertAdjacentElement('afterend', orderDisplay);
-
-  const totalDisplay = document.createElement('p');
-  totalDisplay.className = 'total-price';
-  orderDisplay.insertAdjacentElement('afterend', totalDisplay);
+  const checkoutPanel = document.querySelector('.checkout-panel');
+  const checkoutLink = checkoutPanel?.querySelector('.checkout-link');
+  const totalDisplay = checkoutPanel?.querySelector('.total-price');
 
   const selected = {
     soup: [],
@@ -45,56 +40,31 @@ window.addEventListener('DOMContentLoaded', () => {
     }
   }
 
-  function updateOrderDisplay() {
-    const hasSelection = Object.values(selected).some(arr => arr.length > 0);
-    orderDisplay.innerHTML = '';
+  function validateCombo(selected) {
+    const hasSoup = selected.soup.length > 0;
+    const hasMain = selected.main.length > 0;
+    const hasStarter = selected.starter.length > 0;
+    const hasDrink = selected.drink.length > 0;
 
-    if (!hasSelection) {
-      orderDisplay.textContent = 'Ничего не выбрано';
-      totalDisplay.textContent = '';
-      return;
+    return (
+      (hasSoup && hasMain && hasStarter && hasDrink) ||
+      (hasSoup && hasMain && hasDrink) ||
+      (hasSoup && hasStarter && hasDrink) ||
+      (hasMain && hasStarter && hasDrink) ||
+      (hasMain && hasDrink)
+    );
+  }
+
+  function updateCheckoutPanel() {
+    const total = Object.values(selected).flat().reduce((sum, item) => sum + item.price, 0);
+    const hasItems = Object.values(selected).some(arr => arr.length > 0);
+    const validCombo = validateCombo(selected);
+
+    if (checkoutPanel) {
+      checkoutPanel.style.display = hasItems ? 'block' : 'none';
+      totalDisplay.textContent = `${total} ₽`;
+      checkoutLink.classList.toggle('disabled', !validCombo);
     }
-
-    const labels = {
-      soup: 'Суп',
-      main: 'Главное блюдо',
-      starter: 'Салат/Стартер',
-      drink: 'Напиток',
-      dessert: 'Десерт'
-    };
-
-    for (const category of Object.keys(selected)) {
-      const items = selected[category];
-      const block = document.createElement('div');
-      block.className = 'order-item';
-      block.innerHTML = `<strong>${labels[category]}</strong><br>`;
-
-      if (items.length > 0) {
-        items.forEach((item, index) => {
-          const line = document.createElement('div');
-          line.className = 'order-line';
-          line.innerHTML = `${item.name} ${item.price}₽ <button class="remove-btn">Удалить</button>`;
-
-          line.querySelector('button').addEventListener('click', () => {
-            selected[category].splice(index, 1);
-            saveToStorage();
-            updateOrderDisplay();
-          });
-
-          block.appendChild(line);
-        });
-      } else {
-        block.innerHTML += `${labels[category]} не выбран`;
-      }
-
-      orderDisplay.appendChild(block);
-    }
-
-    let total = 0;
-    for (const items of Object.values(selected)) {
-      items.forEach(item => total += item.price);
-    }
-    totalDisplay.textContent = `Итоговая стоимость: ${total} ₽`;
   }
 
   function createCard(item) {
@@ -112,10 +82,10 @@ window.addEventListener('DOMContentLoaded', () => {
       <button>Добавить</button>
     `;
 
-    card.addEventListener('click', () => {
+    card.querySelector('button').addEventListener('click', () => {
       selected[item.category] = [item];
       saveToStorage();
-      updateOrderDisplay();
+      updateCheckoutPanel();
     });
 
     return card;
@@ -175,50 +145,7 @@ window.addEventListener('DOMContentLoaded', () => {
       });
     });
 
-    updateOrderDisplay();
-  });
-
-  document.querySelector('form').addEventListener('submit', e => {
-    const counts = {
-      soup: selected.soup.length,
-      main: selected.main.length,
-      starter: selected.starter.length,
-      drink: selected.drink.length,
-      dessert: selected.dessert.length
-    };
-
-    const totalSelected = Object.values(counts).reduce((sum, val) => sum + val, 0);
-
-    if (totalSelected === 0) {
-      e.preventDefault();
-      showNotification('Ничего не выбрано. Выберите блюда для заказа');
-      return;
-    }
-
-    if (counts.soup > 0 && counts.main === 0 && counts.starter === 0) {
-      e.preventDefault();
-      showNotification('Выберите главное блюдо/салат/стартер');
-      return;
-    }
-
-    if (counts.starter > 0 && counts.soup === 0 && counts.main === 0) {
-      e.preventDefault();
-      showNotification('Выберите суп или главное блюдо');
-      return;
-    }
-
-    if ((counts.drink > 0 || counts.dessert > 0) && counts.main === 0 && counts.soup === 0 && counts.starter === 0) {
-      e.preventDefault();
-      showNotification('Выберите главное блюдо');
-      return;
-    }
-
-    const hasMeal = counts.soup + counts.main + counts.starter >= 1;
-    if (hasMeal && counts.drink === 0) {
-      e.preventDefault();
-      showNotification('Выберите напиток');
-      return;
-    }
+    updateCheckoutPanel();
   });
 
   function showNotification(message) {
