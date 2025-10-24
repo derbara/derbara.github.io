@@ -1,0 +1,105 @@
+<!DOCTYPE html>
+<html lang="ru">
+<head>
+  <meta charset="UTF-8">
+  <title>Оформление заказа — Бизнес-ланчи Москва</title>
+  <link href="https://fonts.googleapis.com/css2?family=Cormorant+Infant&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="order.css">
+</head>
+<body>
+  <header>
+    <h1 class="company-name">Бизнес-ланчи Москва</h1>
+    <nav>
+      <a href="index.html">Главная</a>
+      <a href="lunch.html">Ланч-меню</a>
+      <a href="order.html" class="active">Оформить заказ</a>
+      <a href="#">О нас</a>
+      <a href="#">Контакты</a>
+    </nav>
+  </header>
+
+  <main>
+    <!-- Состав заказа -->
+    <section>
+      <h2>Состав заказа</h2>
+      <div class="order-items"></div>
+      <p class="empty-message" style="display:none;">
+        Ничего не выбрано. Чтобы добавить блюда в заказ, перейдите на страницу
+        <a href="lunch.html">Собрать ланч</a>.
+      </p>
+    </section>
+
+    <!-- Оформление заказа -->
+    <section class="order-form">
+      <h2>Оформление заказа</h2>
+      <form id="orderForm">
+        <div class="form-columns">
+          <!-- Левая колонка: состав заказа -->
+          <div class="form-block">
+            <h3>Ваш заказ</h3>
+            <div class="order-summary">
+              <!-- Здесь будут строки с блюдами -->
+            </div>
+            <p class="total-price">Итоговая стоимость: 0 ₽</p>
+          </div>
+
+          <!-- Правая колонка: данные пользователя -->
+          <div class="form-block">
+            <h3>Ваши данные</h3>
+            <label for="name">Имя</label>
+            <input type="text" id="name" name="name" required>
+
+            <label for="email">Email</label>
+            <input type="email" id="email" name="email" required>
+
+            <label for="phone">Телефон</label>
+            <input type="tel" id="phone" name="phone" required>
+
+            <label for="address">Адрес доставки</label>
+            <input type="text" id="address" name="address" required>
+
+            <fieldset class="delivery-options">
+              <legend>Время доставки:</legend>
+              <label><input type="radio" name="delivery_time_choice" value="now" required> Как можно скорее</label>
+              <label><input type="radio" name="delivery_time_choice" value="by_time" required> К указанному времени</label>
+            </fieldset>
+
+            <label for="delivery_time">Укажите время доставки</label>
+            <input type="text" id="delivery_time" name="delivery_time" class="time"
+                   placeholder="например, 14:35"
+                   pattern="^(0[7-9]|1[0-9]|2[0-2]|23):[0-5][05]$"
+                   title="Введите время от 07:00 до 23:00 с шагом 5 минут">
+
+            <label for="comments">Комментарий к заказу</label>
+            <textarea id="comments" name="comments"></textarea>
+
+            <div class="checkbox-group">
+              <input type="checkbox" id="subscribe" name="subscribe" checked>
+              <label for="subscribe">Получать информацию о скидках и акциях</label>
+            </div>
+
+            <div class="checkbox-group">
+              <input type="checkbox" id="agree" required>
+              <label for="agree">Оформляя заказ, я соглашаюсь с условиями оферты</label>
+            </div>
+
+            <div class="form-buttons">
+              <button type="submit">Отправить</button>
+            </div>
+          </div>
+        </div>
+      </form>
+    </section>
+  </main>
+
+  <footer>
+    <p>&copy; 2025 Бизнес-ланчи Москва. Все права защищены.</p>
+    <nav>
+      <a href="#">Политика конфиденциальности</a>
+      <a href="#">Условия использования</a>
+    </nav>
+  </footer>
+
+  <script src="order.js"></script>
+</body>
+</html>
