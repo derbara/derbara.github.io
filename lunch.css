@@ -1,9 +1,4 @@
-@font-face {
-    font-family: 'Cormorant Infant';
-    src: url('CormorantInfant-VariableFont_wght.ttf') format('truetype');
-    font-weight: normal;
-    font-style: normal;
-}
+
 
 * {
   box-sizing: border-box;
@@ -12,14 +7,14 @@
 }
 
 body {
-    font-family: 'Cormorant Infant', serif;
-    font-size: 16px;
-    color: #333;
-    background-color: #f9f9f9;
-    line-height: 1.6;
-    min-height: 100vh;
-    display: flex;
-    flex-direction: column;
+  font-family: 'Cormorant Infant', serif;
+  font-size: 16px;
+  color: #333;
+  background-color: #f9f9f9;
+  line-height: 1.6;
+  min-height: 100vh;
+  display: flex;
+  flex-direction: column;
 }
 
 main {
@@ -33,12 +28,11 @@ section {
   padding: 20px 0;
 }
 
-/* Заголовки */
 h1, h2 {
-    font-size: 28px;
-    color: #d62828;
-    margin-bottom: 20px;
-    text-align: center;
+  font-size: 28px;
+  color: #d62828;
+  margin-bottom: 20px;
+  text-align: center;
 }
 
 p {
@@ -91,24 +85,24 @@ header nav a.active {
   font-weight: bold;
 }
 
-/* Карточки блюд*/
+/* карточки */
 .menu-grid {
   display: flex;
-  justify-content: center; /* карточки по центру */
+  justify-content: center;
   flex-wrap: wrap;
   gap: 20px;
 }
 
 .card {
   width: 300px;
-  height: 450px; /* фиксированная высота для выравнивания */
+  height: 450px;
   background: #fff;
   border-radius: 35px;
   padding: 30px 40px;
   transition: all 0.3s ease;
   display: flex;
   flex-direction: column;
-  justify-content: space-between; /* элементы равномерно, кнопка всегда внизу */
+  justify-content: space-between;
   filter: drop-shadow(17px 19px 24px rgba(0, 0, 0, 0.13));
 }
 
@@ -124,8 +118,6 @@ header nav a.active {
   margin-bottom: 15px;
 }
 
-
-/* текст внутри карточки */
 .card .info {
   flex-grow: 1;
 }
@@ -149,7 +141,6 @@ header nav a.active {
   text-align: left;
 }
 
-/* кнопка */
 .card button {
   margin-top: 15px;
   padding: 10px;
@@ -189,17 +180,16 @@ footer nav a:hover {
   color: #ffffff;
 }
 
-
-/* ≤ 800px */
+/* адаптация */
 @media (max-width: 800px) {
   .menu-grid {
     display: grid;
-    grid-template-columns: repeat(2, 1fr); /* 2 колонки */
-    justify-items: center; /* Центрируем карточки в ячейках сетки */
+    grid-template-columns: repeat(2, 1fr);
+    justify-items: center;
   }
 
   header nav {
-    justify-content: space-between; /* Равное расстояние между элементами */
+    justify-content: space-between;
   }
 
   h1 {
@@ -207,16 +197,15 @@ footer nav a:hover {
   }
 }
 
-/* ≤ 600px */
 @media (max-width: 600px) {
   header nav {
-    flex-direction: column; /* Вертикальное направление */
-    align-items: center; /* Центрирование по поперечной оси */
-    gap: 15px; /* Добавим отступ между ссылками */
+    flex-direction: column;
+    align-items: center;
+    gap: 15px;
   }
 
   header nav a {
-    font-size: 22px; /* Увеличиваем шрифт на ~4px (было 18px) */
+    font-size: 22px;
   }
 
   h2 {
@@ -224,10 +213,11 @@ footer nav a:hover {
   }
 
   .menu-grid {
-    grid-template-columns: 1fr; /* 1 колонка */
+    grid-template-columns: 1fr;
   }
 }
 
+/* форма заказа */
 .order-form {
   background-color: #fff;
   padding: 40px 20px;
@@ -328,20 +318,175 @@ button:hover {
   border: 1px solid #ccc;
   margin-bottom: 20px;
 }
+
 .order-summary {
   margin-top: 1em;
   font-size: 1em;
   color: #333;
 }
+
 .order-item {
   margin-bottom: 0.5em;
 }
+
 .total-price {
   font-weight: bold;
   font-size: 1.2em;
   margin-top: 1em;
   color: #333;
 }
+.filters {
+  display: flex;
+  justify-content: center;
+  gap: 15px;
+  margin-bottom: 20px;
+  flex-wrap: wrap;
+}
+
+.filters button {
+  padding: 10px 20px;
+  font-size: 16px;
+  border: 2px solid #d62828;
+  background-color: white;
+  color: #d62828;
+  border-radius: 8px;
+  cursor: pointer;
+  transition: all 0.3s ease;
+}
+
+.filters button:hover {
+  background-color: #fcbf49;
+  color: white;
+}
+
+.filters button.active {
+  background-color: #d62828;
+  color: white;
+  font-weight: bold;
+  box-shadow: 0 0 10px rgba(214, 40, 40, 0.3);
+}
+section h2 {
+  font-size: 26px;
+  margin-bottom: 10px;
+  color: #d62828;
+  text-align: center;
+}
+@media (max-width: 600px) {
+  .filters {
+    flex-direction: column;
+    align-items: center;
+  }
+
+  .filters button {
+    width: 80%;
+    text-align: center;
+  }
+}
+.combo-image-banner {
+  text-align: center;
+  margin: 30px 20px;
+}
+
+.combo-image-banner h2 {
+  font-size: 26px;
+  color: #d62828;
+  margin-bottom: 15px;
+}
+
+.combo-image {
+  max-width: 100%;
+  height: auto;
+  border-radius: 12px;
+  box-shadow: 0 0 10px rgba(0,0,0,0.1);
+}
+.order-line {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  margin-top: 5px;
+}
+
+.remove-btn {
+  background-color: #ccc;
+  border: none;
+  padding: 4px 8px;
+  border-radius: 6px;
+  cursor: pointer;
+  font-size: 14px;
+  margin-left: 10px;
+  transition: background 0.3s ease;
+}
+
+.remove-btn:hover {
+  background-color: tomato;
+  color: white;
+}
+.notification {
+  position: fixed;
+  top: 0; left: 0;
+  width: 100vw;
+  height: 100vh;
+  background: rgba(0,0,0,0.5);
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  z-index: 9999;
+}
+.order-line {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  margin-top: 5px;
+}
+
+.remove-btn {
+  background-color: #ccc;
+  border: none;
+  padding: 4px 8px;
+  border-radius: 6px;
+  cursor: pointer;
+  font-size: 14px;
+  margin-left: 10px;
+  transition: background 0.3s ease;
+}
+
+.remove-btn:hover {
+  background-color: tomato;
+  color: white;
+}
+.notification-content {
+  background-color: #fff;
+  padding: 30px 40px;
+  border-radius: 16px;
+  text-align: center;
+  box-shadow: 0 0 30px rgba(0, 0, 0, 0.4);
+  max-width: 400px;
+  font-family: 'Cormorant Infant', serif;
+}
+
+.notification-content p {
+  font-size: 20px;
+  color: #333;
+  margin-bottom: 20px;
+  font-weight: bold;
+}
+
+.notification-content button {
+  padding: 10px 20px;
+  font-size: 16px;
+  background-color: #d62828;
+  color: white;
+  border: none;
+  border-radius: 8px;
+  cursor: pointer;
+  transition: all 0.3s ease;
+}
+
+.notification-content button:hover {
+  background-color: #fcbf49;
+  color: black;
+}
+
 
 
 
