@@ -125,12 +125,10 @@ window.addEventListener('DOMContentLoaded', () => {
   }
 
   loadDishes().then(menuItems => {
-    // Отрисовать все категории при загрузке
     Object.entries(sections).forEach(([category, grid]) => {
       renderAll(category, grid, menuItems);
     });
 
-    // Настроить фильтры
     document.querySelectorAll('.filters').forEach(filterBlock => {
       const buttons = filterBlock.querySelectorAll('button');
       const grid = filterBlock.parentElement.querySelector('.menu-grid');
@@ -170,28 +168,40 @@ window.addEventListener('DOMContentLoaded', () => {
       return;
     }
 
-    if (counts.soup > 0 && counts.main === 0 && counts.starter === 0) {
-      e.preventDefault();
-      showNotification('Выберите главное блюдо/салат/стартер');
-      return;
-    }
-
-    if (counts.starter > 0 && counts.soup === 0 && counts.main === 0) {
-      e.preventDefault();
-      showNotification('Выберите суп или главное блюдо');
-      return;
-    }
-
-    if ((counts.drink > 0 || counts.dessert > 0) && counts.main === 0) {
-      e.preventDefault();
-      showNotification('Выберите главное блюдо');
-      return;
-    }
-
-    const hasMeal = counts.soup + counts.main + counts.starter >= 1;
-    if (hasMeal && counts.drink === 0) {
+    if (counts.drink === 0) {
       e.preventDefault();
       showNotification('Выберите напиток');
+      return;
+    }
+
+    const validCombo =
+      (counts.soup && counts.main && counts.starter && counts.drink) || // вариант 1
+      (counts.soup && counts.main && counts.drink) ||                   // вариант 2
+      (counts.soup && counts.starter && counts.drink) ||                // вариант 3
+      (counts.main && counts.starter && counts.drink) ||                // вариант 4
+      (counts.main && counts.drink);                                    // вариант 5
+
+    if (!validCombo) {
+      if (counts.soup > 0 && counts.main === 0 && counts.starter === 0) {
+        e.preventDefault();
+        showNotification('Выберите главное блюдо/салат/стартер');
+        return;
+      }
+
+      if (counts.starter > 0 && counts.soup === 0 && counts.main === 0) {
+        e.preventDefault();
+        showNotification('Выберите суп или главное блюдо');
+        return;
+      }
+
+      if ((counts.drink > 0 || counts.dessert > 0) && counts.main === 0 && counts.soup === 0 && counts.starter === 0) {
+        e.preventDefault();
+        showNotification('Выберите главное блюдо');
+        return;
+      }
+
+      e.preventDefault();
+      showNotification('Комбинация блюд недопустима. Проверьте состав ланча');
       return;
     }
   });
@@ -218,3 +228,4 @@ window.addEventListener('DOMContentLoaded', () => {
 
   updateOrderDisplay();
 });
+
