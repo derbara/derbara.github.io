@@ -18,97 +18,100 @@
   </header>
 
   <main>
+    <section class="combo-image-banner">
+  <h2>Доступные для заказа комбо</h2>
+  <img src="images/combo.jpg" alt="Комбо-варианты" class="combo-image">
+</section>
+    <!-- Супы -->
     <section>
       <h2>Выберите суп</h2>
-      <div class="menu-grid"></div>
+      <div class="filters">
+        <button data-kind="fish">Рыбный</button>
+        <button data-kind="meat">Мясной</button>
+        <button data-kind="veg">Вегетарианский</button>
+      </div>
+      <div class="menu-grid" data-category="soup"></div>
     </section>
 
+    <!-- Основное блюдо -->
     <section>
       <h2>Выберите основное блюдо</h2>
-      <div class="menu-grid"></div>
+      <div class="filters">
+        <button data-kind="fish">Рыбное</button>
+        <button data-kind="meat">Мясное</button>
+        <button data-kind="veg">Вегетарианское</button>
+      </div>
+      <div class="menu-grid" data-category="main"></div>
     </section>
 
+    <!-- Салаты и стартеры -->
     <section>
-      <h2>Напитки</h2>
-      <div class="menu-grid"></div>
+      <h2>Выберите салат или стартер</h2>
+      <div class="filters">
+        <button data-kind="fish">Рыбный</button>
+        <button data-kind="meat">Мясной</button>
+        <button data-kind="veg">Вегетарианский</button>
+      </div>
+      <div class="menu-grid" data-category="starter"></div>
     </section>
 
+    <!-- Напитки -->
+    <section>
+      <h2>Выберите напиток</h2>
+      <div class="filters">
+        <button data-kind="cold">Холодный</button>
+        <button data-kind="hot">Горячий</button>
+      </div>
+      <div class="menu-grid" data-category="drink"></div>
+    </section>
+
+    <!-- Десерты -->
+    <section>
+      <h2>Выберите десерт</h2>
+      <div class="filters">
+        <button data-kind="small">Маленькая порция</button>
+        <button data-kind="medium">Средняя порция</button>
+        <button data-kind="large">Большая порция</button>
+      </div>
+      <div class="menu-grid" data-category="dessert"></div>
+    </section>
+
+    <!-- Заказ -->
     <section class="order-form">
       <h2>Сделать заказ</h2>
       <form action="https://httpbin.org/post" method="POST">
         <div class="form-columns">
           <div class="form-block">
             <h3>Ваш заказ</h3>
-<!--
-            <label for="soup">Суп</label>
-            <select id="soup" name="soup" required>
-              <option value="">Выберите суп</option>
-              <option value="gaspacho">Гаспачо</option>
-              <option value="mushroom">Грибной суп-пюре</option>
-              <option value="norwegian">Норвежский суп</option>
-            </select>
-
-            <label for="main">Главное блюдо</label>
-            <select id="main" name="main" required>
-              <option value="">Выберите главное блюдо</option>
-              <option value="blinchiki">Блинчики с мясом</option>
-              <option value="pizza">Пицца Маргарита</option>
-              <option value="cutlet">Котлета с пюре</option>
-            </select>
-
-            <label for="drink">Напиток</label>
-            <select id="drink" name="drink" required>
-              <option value="">Выберите напиток</option>
-              <option value="kompot">Компот</option>
-              <option value="tea">Чай</option>
-              <option value="cacao">Какао</option>
-            </select>
-          -->
             <label for="comments">Комментарий к заказу</label>
             <textarea id="comments" name="comments"></textarea>
           </div>
 
           <div class="form-block">
             <h3>Ваши данные</h3>
-
             <label for="name">Имя</label>
             <input type="text" id="name" name="name" required>
-
             <label for="email">Email</label>
             <input type="email" id="email" name="email" required>
-
             <div class="checkbox-group">
               <input type="checkbox" id="subscribe" name="subscribe" checked>
               <label for="subscribe">Получать информацию о скидках и акциях</label>
             </div>
-
             <label for="phone">Телефон</label>
             <input type="tel" id="phone" name="phone" required>
-
             <label for="address">Адрес доставки</label>
             <input type="text" id="address" name="address" required>
             <small>Доставка осуществляется только по Москве</small>
-
             <fieldset class="delivery-options">
               <legend>Время доставки:</legend>
-
-              <label for="asap">
-                <input type="radio" id="asap" name="delivery_time_choice" value="asap" required>
-                Как можно скорее
-              </label>
-
-              <label for="specific">
-                <input type="radio" id="specific" name="delivery_time_choice" value="specific" required>
-                К указанному времени
-              </label>
+              <label><input type="radio" name="delivery_time_choice" value="asap" required> Как можно скорее</label>
+              <label><input type="radio" name="delivery_time_choice" value="specific" required> К указанному времени</label>
             </fieldset>
-
             <label for="delivery_time">Укажите время доставки</label>
             <input type="text" id="delivery_time" name="delivery_time" class="time"
                    placeholder="например, 14:35"
                    pattern="^(0[7-9]|1[0-9]|2[0-2]|23):[0-5][05]$"
                    title="Введите время от 07:00 до 23:00 с шагом 5 минут">
-
             <div class="form-buttons">
               <button type="reset">Сбросить</button>
               <button type="submit">Отправить</button>
@@ -127,10 +130,10 @@
     </nav>
   </footer>
 
-  <!-- Подключение скриптов -->
-  <script src="menu.js"></script>
   <script src="render.js"></script>
 </body>
 </html>
+
+
 
 
