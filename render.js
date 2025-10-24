@@ -133,7 +133,7 @@ window.addEventListener('DOMContentLoaded', () => {
     // Настроить фильтры
     document.querySelectorAll('.filters').forEach(filterBlock => {
       const buttons = filterBlock.querySelectorAll('button');
-      const grid = filterBlock.nextElementSibling;
+      const grid = filterBlock.parentElement.querySelector('.menu-grid');
       const category = grid.dataset.category;
 
       buttons.forEach(button => {
@@ -218,7 +218,3 @@ window.addEventListener('DOMContentLoaded', () => {
 
   updateOrderDisplay();
 });
-
-
-
-
