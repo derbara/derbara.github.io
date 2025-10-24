@@ -84,9 +84,9 @@ document.addEventListener('DOMContentLoaded', async () => {
   document.querySelector('#orderForm').addEventListener('submit', async e => {
     e.preventDefault();
 
-    const missingMessage = getMissingMessage(selectedIds);
-    if (missingMessage) {
-      showNotification(missingMessage);
+    const message = getMissingMessage(selectedIds);
+    if (message) {
+      showNotification(message);
       return;
     }
 
