@@ -58,7 +58,9 @@ document.addEventListener('DOMContentLoaded', async () => {
 
     const line = document.createElement('div');
     line.className = 'order-line';
-    line.textContent = dish ? `${labels[cat]}: ${dish.name} ${dish.price}₽` : `${labels[cat]}: Не выбран`;
+    line.textContent = dish
+      ? `${labels[cat]}: ${dish.name} ${dish.price}₽`
+      : `${labels[cat]}: Не выбран`;
     summaryContainer.appendChild(line);
   });
 
@@ -82,8 +84,9 @@ document.addEventListener('DOMContentLoaded', async () => {
   document.querySelector('#orderForm').addEventListener('submit', async e => {
     e.preventDefault();
 
-    if (!validateCombo(selectedIds)) {
-      alert('Состав заказа не соответствует доступным комбо.');
+    const missingMessage = getMissingMessage(selectedIds);
+    if (missingMessage) {
+      showNotification(missingMessage);
       return;
     }
 
@@ -113,30 +116,53 @@ document.addEventListener('DOMContentLoaded', async () => {
 
       if (!response.ok) throw new Error('Ошибка при оформлении заказа');
 
-      alert('Заказ успешно оформлен!');
+      showNotification('Заказ успешно оформлен!');
       localStorage.removeItem('order');
-      window.location.href = 'index.html';
+      setTimeout(() => {
+        window.location.href = 'index.html';
+      }, 2000);
     } catch (error) {
       console.error(error);
-      alert('Не удалось оформить заказ. Попробуйте позже.');
+      showNotification('Не удалось оформить заказ. Попробуйте позже.');
     }
   });
 });
 
-// Проверка допустимого комбо
-function validateCombo(order) {
+// Диагностика недостающих категорий
+function getMissingMessage(order) {
   const hasSoup = 'soup' in order;
   const hasMain = 'main-course' in order;
   const hasSalad = 'salad' in order;
   const hasDrink = 'drink' in order;
+  const hasDessert = 'dessert' in order;
 
-  return (
-    (hasSoup && hasMain && hasSalad && hasDrink) ||
-    (hasSoup && hasMain && hasDrink) ||
-    (hasSoup && hasSalad && hasDrink) ||
-    (hasMain && hasSalad && hasDrink) ||
-    (hasMain && hasDrink)
-  );
+  const totalSelected = Object.keys(order).length;
+
+  if (totalSelected === 0) return 'Ничего не выбрано. Выберите блюда для заказа';
+  if (!hasDrink) return 'Выберите напиток';
+  if (hasSoup && !hasMain && !hasSalad) return 'Выберите главное блюдо/салат/стартер';
+  if (hasSalad && !hasSoup && !hasMain) return 'Выберите суп или главное блюдо';
+  if ((hasDrink || hasDessert) && !hasMain && !hasSoup) return 'Выберите главное блюдо';
+
+  return null; // Комбо допустимо
 }
 
+// Уведомление
+function showNotification(message) {
+  const existing = document.querySelector('.notification');
+  if (existing) existing.remove();
 
+  const overlay = document.createElement('div');
+  overlay.className = 'notification';
+
+  overlay.innerHTML = `
+    <p>${message}</p>
+    <button>Окей 👌</button>
+  `;
+
+  document.body.appendChild(overlay);
+
+  overlay.querySelector('button').addEventListener('click', () => {
+    overlay.remove();
+  });
+}
