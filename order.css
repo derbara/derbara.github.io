@@ -257,34 +257,28 @@ button[type="submit"]:hover {
 /* Уведомление */
 .notification {
   position: fixed;
-  top: 0; left: 0;
-  width: 100vw;
-  height: 100vh;
-  background: rgba(0,0,0,0.5);
-  display: flex;
-  justify-content: center;
-  align-items: center;
-  z-index: 9999;
-}
-
-.notification-content {
+  top: 50%;
+  left: 50%;
+  transform: translate(-50%, -50%);
   background-color: #fff;
   padding: 30px 40px;
   border-radius: 16px;
+  box-shadow: 0 0 20px rgba(0, 0, 0, 0.3);
+  z-index: 9999;
   text-align: center;
-  box-shadow: 0 0 30px rgba(0, 0, 0, 0.4);
   max-width: 400px;
   font-family: 'Cormorant Infant', serif;
+  animation: fadeIn 0.3s ease-in-out;
 }
 
-.notification-content p {
-  font-size: 20px;
+.notification p {
+  font-size: 18px;
   color: #333;
   margin-bottom: 20px;
   font-weight: bold;
 }
 
-.notification-content button {
+.notification button {
   padding: 10px 20px;
   font-size: 16px;
   background-color: #d62828;
@@ -292,13 +286,19 @@ button[type="submit"]:hover {
   border: none;
   border-radius: 8px;
   cursor: pointer;
-  transition: all 0.3s ease;
+  transition: background 0.3s ease;
 }
 
-.notification-content button:hover {
+.notification button:hover {
   background-color: #fcbf49;
   color: black;
 }
+
+@keyframes fadeIn {
+  from { opacity: 0; transform: translate(-50%, -60%); }
+  to { opacity: 1; transform: translate(-50%, -50%); }
+}
+
 
 /* Footer */
 footer {
@@ -343,3 +343,4 @@ footer nav a:hover {
     width: 80%;
   }
 }
+
