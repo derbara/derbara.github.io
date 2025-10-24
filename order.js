@@ -128,7 +128,7 @@ document.addEventListener('DOMContentLoaded', async () => {
   });
 });
 
-// Проверка допустимого комбо и вывод конкретного уведомления
+// Проверка допустимого комбо с приоритетом ошибок
 function getMissingMessage(order) {
   const hasSoup = 'soup' in order;
   const hasMain = 'main-course' in order;
@@ -139,10 +139,10 @@ function getMissingMessage(order) {
   const selected = Object.keys(order).filter(k => k !== 'dessert');
 
   if (selected.length === 0) return 'Ничего не выбрано. Выберите блюда для заказа';
-  if (!hasDrink) return 'Выберите напиток';
   if (hasSoup && !hasMain && !hasSalad) return 'Выберите главное блюдо/салат/стартер';
   if (hasSalad && !hasSoup && !hasMain) return 'Выберите суп или главное блюдо';
   if ((hasDrink || hasDessert) && !hasMain && !hasSoup && !hasSalad) return 'Выберите главное блюдо';
+  if (!hasDrink) return 'Выберите напиток';
 
   if (
     (hasSoup && hasMain && hasSalad && hasDrink) ||
