@@ -1,8 +1,8 @@
 window.addEventListener('DOMContentLoaded', () => {
   const sections = {
     soup: document.querySelector('[data-category="soup"]'),
-    main: document.querySelector('[data-category="main"]'),
-    starter: document.querySelector('[data-category="starter"]'),
+    'main-course': document.querySelector('[data-category="main"]'),
+    salad: document.querySelector('[data-category="starter"]'),
     drink: document.querySelector('[data-category="drink"]'),
     dessert: document.querySelector('[data-category="dessert"]')
   };
@@ -18,8 +18,8 @@ window.addEventListener('DOMContentLoaded', () => {
 
   const selected = {
     soup: [],
-    main: [],
-    starter: [],
+    'main-course': [],
+    salad: [],
     drink: [],
     dessert: []
   };
@@ -36,8 +36,8 @@ window.addEventListener('DOMContentLoaded', () => {
 
     const labels = {
       soup: 'Суп',
-      main: 'Главное блюдо',
-      starter: 'Салат/Стартер',
+      'main-course': 'Главное блюдо',
+      salad: 'Салат/Стартер',
       drink: 'Напиток',
       dessert: 'Десерт'
     };
@@ -155,8 +155,8 @@ window.addEventListener('DOMContentLoaded', () => {
   document.querySelector('form').addEventListener('submit', e => {
     const counts = {
       soup: selected.soup.length,
-      main: selected.main.length,
-      starter: selected.starter.length,
+      main: selected['main-course'].length,
+      starter: selected.salad.length,
       drink: selected.drink.length,
       dessert: selected.dessert.length
     };
@@ -217,6 +217,5 @@ window.addEventListener('DOMContentLoaded', () => {
 
   updateOrderDisplay();
 });
-
 
 
