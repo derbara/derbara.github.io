@@ -112,18 +112,17 @@ window.addEventListener('DOMContentLoaded', () => {
       .forEach(item => grid.appendChild(createCard(item)));
   }
 
- async function loadDishes() {
-  try {
-    const response = await fetch('dishes.json');
-    if (!response.ok) throw new Error('Ошибка загрузки данных');
-    return await response.json();
-  } catch (error) {
-    console.error('Ошибка при загрузке блюд:', error);
-    showNotification('Не удалось загрузить меню. Попробуйте позже.');
-    return [];
+  async function loadDishes() {
+    try {
+      const response = await fetch('dishes.json');
+      if (!response.ok) throw new Error('Ошибка загрузки данных');
+      return await response.json();
+    } catch (error) {
+      console.error('Ошибка при загрузке блюд:', error);
+      showNotification('Не удалось загрузить меню. Попробуйте позже.');
+      return [];
+    }
   }
-}
-
 
   loadDishes().then(menuItems => {
     menuItems.forEach(item => {
@@ -218,5 +217,6 @@ window.addEventListener('DOMContentLoaded', () => {
 
   updateOrderDisplay();
 });
+
 
 
