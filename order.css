@@ -203,20 +203,29 @@ fieldset {
   margin-bottom: 15px;
 }
 
+/* Кнопки формы */
 .form-buttons {
   display: flex;
+  flex-wrap: wrap;
+  justify-content: center;
   gap: 20px;
-  margin-top: 20px;
+  margin-top: 30px;
+}
+
+.form-buttons button {
+  flex: 1 1 200px;
+  max-width: 300px;
+  padding: 10px 20px;
+  font-size: 16px;
+  border-radius: 8px;
+  cursor: pointer;
+  border: none;
+  transition: background 0.3s ease;
 }
 
 button[type="submit"] {
   background-color: #d62828;
   color: white;
-  border: none;
-  padding: 10px 20px;
-  font-size: 16px;
-  border-radius: 8px;
-  cursor: pointer;
 }
 
 button[type="submit"]:hover {
@@ -323,5 +332,14 @@ footer nav a:hover {
 
   .card {
     width: 90%;
+  }
+
+  .form-buttons {
+    flex-direction: column;
+    align-items: center;
+  }
+
+  .form-buttons button {
+    width: 80%;
   }
 }
