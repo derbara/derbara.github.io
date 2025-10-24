@@ -283,3 +283,50 @@
     "keyword": "checheesecake",
     "kind": "small",
     "name": "Чизкейк",
+ "price": 240
+  },
+  {
+    "category": "dessert",
+    "count": "125 гр",
+    "created_at": "2024-11-18T19:11:52",
+    "id": 27,
+    "image": "https://edu.std-900.ist.mospolytech.ru/labs/api/images/desserts/chocolatecheesecake",
+    "keyword": "chocolatecheesecake",
+    "kind": "small",
+    "name": "Шоколадный чизкейк",
+    "price": 260
+  },
+  {
+    "category": "dessert",
+    "count": "140 гр",
+    "created_at": "2024-11-18T19:11:52",
+    "id": 28,
+    "image": "https://edu.std-900.ist.mospolytech.ru/labs/api/images/desserts/chocolatecake",
+    "keyword": "chocolatecake",
+    "kind": "small",
+    "name": "Шоколадный торт",
+    "price": 270
+  },
+  {
+    "category": "dessert",
+    "count": "350 гр",
+    "created_at": "2024-11-18T19:11:52",
+    "id": 29,
+    "image": "https://edu.std-900.ist.mospolytech.ru/labs/api/images/desserts/donuts2",
+    "keyword": "donuts2",
+    "kind": "medium",
+    "name": "Пончики (3 штуки)",
+    "price": 410
+  },
+  {
+    "category": "dessert",
+    "count": "700 гр",
+    "created_at": "2024-11-18T19:11:52",
+    "id": 30,
+    "image": "https://edu.std-900.ist.mospolytech.ru/labs/api/images/desserts/donuts",
+    "keyword": "donuts",
+    "kind": "large",
+    "name": "Пончики (6 штук)",
+    "price": 650
+  }
+]
