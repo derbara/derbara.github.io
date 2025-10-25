@@ -95,16 +95,21 @@ function renderAll(category, grid, menuItems) {
   grid.innerHTML = '';
   menuItems
     .filter(item => item.category === category)
-    .sort((a, b) => a.name.localeCompare(b.name, 'ru')) // сортировка по алфавиту
+    .sort((a, b) =>
+      a.name.trim().toLowerCase().localeCompare(b.name.trim().toLowerCase(), 'ru')
+    )
     .forEach(item => grid.appendChild(createCard(item)));
 }
 
 
-  function renderFiltered(category, kind, grid, menuItems) {
+
+ function renderFiltered(category, kind, grid, menuItems) {
   grid.innerHTML = '';
   menuItems
     .filter(item => item.category === category && item.kind === kind)
-    .sort((a, b) => a.name.localeCompare(b.name, 'ru')) // сортировка по алфавиту
+    .sort((a, b) =>
+      a.name.trim().toLowerCase().localeCompare(b.name.trim().toLowerCase(), 'ru')
+    )
     .forEach(item => grid.appendChild(createCard(item)));
 }
 
@@ -180,6 +185,7 @@ function renderAll(category, grid, menuItems) {
     overlay.querySelector('button').addEventListener('click', () => overlay.remove());
   }
 });
+
 
 
 
