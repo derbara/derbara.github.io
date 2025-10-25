@@ -91,19 +91,23 @@ window.addEventListener('DOMContentLoaded', () => {
     return card;
   }
 
-  function renderAll(category, grid, menuItems) {
-    grid.innerHTML = '';
-    menuItems
-      .filter(item => item.category === category)
-      .forEach(item => grid.appendChild(createCard(item)));
-  }
+function renderAll(category, grid, menuItems) {
+  grid.innerHTML = '';
+  menuItems
+    .filter(item => item.category === category)
+    .sort((a, b) => a.name.localeCompare(b.name, 'ru')) // сортировка по алфавиту
+    .forEach(item => grid.appendChild(createCard(item)));
+}
+
 
   function renderFiltered(category, kind, grid, menuItems) {
-    grid.innerHTML = '';
-    menuItems
-      .filter(item => item.category === category && item.kind === kind)
-      .forEach(item => grid.appendChild(createCard(item)));
-  }
+  grid.innerHTML = '';
+  menuItems
+    .filter(item => item.category === category && item.kind === kind)
+    .sort((a, b) => a.name.localeCompare(b.name, 'ru')) // сортировка по алфавиту
+    .forEach(item => grid.appendChild(createCard(item)));
+}
+
 
   async function loadDishes() {
     try {
@@ -176,5 +180,6 @@ window.addEventListener('DOMContentLoaded', () => {
     overlay.querySelector('button').addEventListener('click', () => overlay.remove());
   }
 });
+
 
 
