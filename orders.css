@@ -1,0 +1,265 @@
+/* Базовые стили */
+* {
+  box-sizing: border-box;
+  margin: 0;
+  padding: 0;
+}
+
+body {
+  font-family: 'Cormorant Infant', serif;
+  font-size: 16px;
+  color: #333;
+  background-color: #f9f9f9;
+  line-height: 1.6;
+  min-height: 100vh;
+  display: flex;
+  flex-direction: column;
+}
+
+main {
+  flex: 1;
+  margin: 20px;
+  padding: 20px;
+}
+
+h1, h2 {
+  font-size: 28px;
+  color: #d62828;
+  margin-bottom: 20px;
+  text-align: center;
+}
+
+p {
+  font-size: 16px;
+  color: #444;
+}
+
+/* Header */
+header {
+  background-color: #d62828;
+  color: white;
+  padding: 20px;
+  text-align: center;
+}
+
+.company-name {
+  font-size: 32px;
+  font-weight: bold;
+  color: white;
+  margin-bottom: 10px;
+}
+
+header nav {
+  display: flex;
+  justify-content: center;
+  gap: 20px;
+  flex-wrap: wrap;
+  margin-top: 10px;
+}
+
+header nav a {
+  text-decoration: none;
+  font-size: 18px;
+  color: white;
+  transition: color 0.3s ease;
+}
+
+header nav a:hover {
+  color: #fcbf49;
+}
+
+header nav a.active {
+  color: tomato;
+  font-weight: bold;
+}
+
+/* Карточки заказов */
+.orders-container {
+  display: flex;
+  flex-direction: column;
+  gap: 20px;
+  max-width: 900px;
+  margin: 0 auto;
+}
+
+.order-card {
+  background-color: #fff;
+  border-radius: 20px;
+  padding: 20px;
+  box-shadow: 0 0 15px rgba(0,0,0,0.1);
+}
+
+.order-card p {
+  margin: 8px 0;
+  font-size: 16px;
+}
+
+.order-card .actions {
+  margin-top: 15px;
+  display: flex;
+  gap: 10px;
+  flex-wrap: wrap;
+}
+
+.order-card button {
+  padding: 8px 16px;
+  border: none;
+  border-radius: 8px;
+  background-color: #d62828;
+  color: white;
+  cursor: pointer;
+  transition: background 0.3s ease;
+}
+
+.order-card button:hover {
+  background-color: #fcbf49;
+  color: black;
+}
+
+/* Модальные окна */
+.modal {
+  position: fixed;
+  top: 50%;
+  left: 50%;
+  transform: translate(-50%, -50%);
+  background-color: #fff;
+  padding: 30px;
+  border-radius: 20px;
+  box-shadow: 0 0 20px rgba(0,0,0,0.3);
+  z-index: 9999;
+  max-width: 500px;
+  width: 90%;
+  animation: fadeIn 0.3s ease-in-out;
+}
+
+.modal h3 {
+  margin-top: 0;
+  font-size: 22px;
+  color: #d62828;
+  text-align: center;
+}
+
+.modal .close {
+  position: absolute;
+  top: 12px;
+  right: 16px;
+  font-size: 20px;
+  cursor: pointer;
+  color: #999;
+}
+
+.modal .modal-content p {
+  margin: 10px 0;
+}
+
+.modal .modal-actions {
+  margin-top: 20px;
+  display: flex;
+  justify-content: flex-end;
+  gap: 10px;
+}
+
+.modal .modal-actions button {
+  padding: 10px 20px;
+  font-size: 16px;
+  border-radius: 8px;
+  border: none;
+  cursor: pointer;
+  background-color: #d62828;
+  color: white;
+  transition: background 0.3s ease;
+}
+
+.modal .modal-actions button:hover {
+  background-color: #fcbf49;
+  color: black;
+}
+
+/* Уведомление */
+.notification {
+  position: fixed;
+  top: 50%;
+  left: 50%;
+  transform: translate(-50%, -50%);
+  background-color: #fff;
+  padding: 30px 40px;
+  border-radius: 16px;
+  box-shadow: 0 0 20px rgba(0, 0, 0, 0.3);
+  z-index: 9999;
+  text-align: center;
+  max-width: 400px;
+  font-family: 'Cormorant Infant', serif;
+  animation: fadeIn 0.3s ease-in-out;
+}
+
+.notification p {
+  font-size: 18px;
+  color: #333;
+  margin-bottom: 20px;
+  font-weight: bold;
+}
+
+.notification button {
+  padding: 10px 20px;
+  font-size: 16px;
+  background-color: #d62828;
+  color: white;
+  border: none;
+  border-radius: 8px;
+  cursor: pointer;
+  transition: background 0.3s ease;
+}
+
+.notification button:hover {
+  background-color: #fcbf49;
+  color: black;
+}
+
+@keyframes fadeIn {
+  from { opacity: 0; transform: translate(-50%, -60%); }
+  to { opacity: 1; transform: translate(-50%, -50%); }
+}
+
+/* Footer */
+footer {
+  background-color: black;
+  color: white;
+  padding: 30px 20px;
+  text-align: center;
+  margin-top: auto;
+}
+
+footer nav {
+  margin-top: 10px;
+}
+
+footer nav a {
+  text-decoration: none;
+  color: #fcbf49;
+  margin: 0 10px;
+  font-size: 16px;
+}
+
+footer nav a:hover {
+  color: #ffffff;
+}
+
+/* Адаптация */
+@media (max-width: 700px) {
+  .order-card {
+    padding: 15px;
+  }
+
+  .modal {
+    padding: 20px;
+  }
+
+  .modal .modal-actions {
+    flex-direction: column;
+    align-items: center;
+  }
+
+  .modal .modal-actions button {
+    width: 100%;
+  }
+}
